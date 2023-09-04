@@ -60,56 +60,12 @@ The API should now be running and accessible at `http://localhost:8080`.
 
 The API provides the following endpoints:
 
-- `GET /issues`: Retrieve a list of all issues.
-- `GET /issues/{id}`: Retrieve a specific issue by its ID.
-- `POST /issues`: Create a new issue.
-- `PUT /issues/{id}`: Update an existing issue by its ID.
-- `DELETE /issues/{id}`: Delete an issue by its ID.
+- `GET /api/issue-report/list`: Retrieve a list of all issues.
+- `GET /api/issue-report/{id}`: Retrieve a specific issue by its ID.
+- `POST /api/issue-report/new-issue`: Create a new issue.
+- `PUT /api/issue-report/update/{id}`: Update an existing issue by its ID.
+- `DELETE /api/issue-report/{id}`: Delete an issue by its ID.
 
-### Examples
-
-#### Retrieving All Issues
-
-```http
-GET /issues
-```
-
-#### Retrieving a Specific Issue
-
-```http
-GET /issues/1
-```
-
-#### Creating a New Issue
-
-```http
-POST /issues
-Content-Type: application/json
-
-{
-  "title": "New Issue",
-  "description": "Description of the new issue",
-  "priority": "HIGH"
-}
-```
-
-#### Updating an Existing Issue
-
-```http
-PUT /issues/1
-Content-Type: application/json
-
-{
-  "title": "Updated Issue Title",
-  "description": "Updated description"
-}
-```
-
-#### Deleting an Issue
-
-```http
-DELETE /issues/1
-```
 
 ## Error Handling
 
