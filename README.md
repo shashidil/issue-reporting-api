@@ -111,10 +111,6 @@ Content-Type: application/json
 DELETE /issues/1
 ```
 
-## Authentication
-
-The System Issue Reporting API does not currently implement authentication. It is essential to secure the API for production use. You can integrate authentication mechanisms such as JWT (JSON Web Tokens), OAuth 2.0, or API keys depending on your requirements.
-
 ## Error Handling
 
 The API handles errors with appropriate HTTP status codes and error messages in the response body. Be sure to check the response status code and body for error details when using the API.
