@@ -1,9 +1,9 @@
 package com.issuereporting.issuereportingapi.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.sql.Timestamp;
 
 @Entity
@@ -15,9 +15,11 @@ public class Issue {
     private long issueId;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @Column(name = "description", columnDefinition = "TEXT")
+    @NotNull
     private String description;
 
     @ManyToOne

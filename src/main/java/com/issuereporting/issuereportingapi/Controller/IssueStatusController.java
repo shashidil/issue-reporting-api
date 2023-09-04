@@ -15,7 +15,7 @@ public class IssueStatusController {
     private IssueStatusService issueStatusService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> getAllItems() {
+    public ResponseEntity<?> getAllIssue() {
         return new ResponseEntity<>(issueStatusService.findAllIssueStatus(), HttpStatus.OK
         );
     }

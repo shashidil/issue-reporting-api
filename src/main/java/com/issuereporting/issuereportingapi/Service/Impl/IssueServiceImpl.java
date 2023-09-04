@@ -12,9 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +24,6 @@ public class IssueServiceImpl implements IssueService {
     private IssueStatusRepo issueStatusRepo;
     private ModelMapper modelMapper = new ModelMapper();
 
-
     @Override
     public IssueDto saveIssue(IssueDto issueDto) {
         Issue issue = new Issue();
@@ -36,11 +33,7 @@ public class IssueServiceImpl implements IssueService {
         issue.setStatus(openStatus);
         Issue saved = issueRepo.save(issue);
         return modelMapper.map(saved,IssueDto.class);
-
     }
-
-
-
     @Override
     public List<Issue> findAllIssue() {
         List<Issue> issueList = issueRepo.findAll();
@@ -48,8 +41,6 @@ public class IssueServiceImpl implements IssueService {
             throw new IssueNotFoundException("Error: Issue is not found.");
         }
         return issueList;
-
-
     }
 
     @Override
@@ -73,26 +64,39 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public IssueDto updateIssue(IssueDto issueDto) {
-        Issue issue = new Issue();
-        issue.setTitle(issueDto.getTitle());
-        issue.setDescription(issueDto.getDescription());
-
-        //issue.setStatus(new IssueStatus(issueDto.getStatus().getId(), issueDto.getStatus().getName()));
-//        Issue saved = issueRepo.save(modelMapper.map(issueDto, Issue.class));
+    public IssueDto updateIssue(IssueDto issueDto, long id) {
+        Issue existIssueStatus = issueRepo.findById(id).orElseThrow(() -> new IssueNotFoundException("Error: Issue status is not found in db."));
+        existIssueStatus.setTitle(issueDto.getTitle());
+        existIssueStatus.setDescription(issueDto.getDescription());
         IssueStatus openStatus =  issueStatusRepo.findById(issueDto.getStatus().getId()).orElseThrow(() -> new IssueNotFoundException("Error: Issue status is not found."));
-        issue.setStatus(openStatus);
-        Issue saved = issueRepo.save(issue);
-        return modelMapper.map(saved,IssueDto.class);
-    }
 
+        System.out.println(existIssueStatus.getStatus().getId());
+        if (existIssueStatus.getStatus().getId() == 1 && issueDto.getStatus().getId() == 2) {
+            existIssueStatus.setStatus(openStatus);
+            Issue saved = issueRepo.save(existIssueStatus);
+            return modelMapper.map(saved, IssueDto.class);
+        }
+        if (existIssueStatus.getStatus().getId() == 2 && (issueDto.getStatus().getId() == 3 || issueDto.getStatus().getId() == 4)) {
+            existIssueStatus.setStatus(openStatus);
+            Issue saved = issueRepo.save(existIssueStatus);
+            return modelMapper.map(saved, IssueDto.class);
+        }
+        if (existIssueStatus.getStatus().getId() == 3 && (issueDto.getStatus().getId() == 2 || issueDto.getStatus().getId() == 4)) {
+            existIssueStatus.setStatus(openStatus);
+            Issue saved = issueRepo.save(existIssueStatus);
+            return modelMapper.map(saved, IssueDto.class);
+        }
+        if (existIssueStatus.getStatus().getId() == 4 && (issueDto.getStatus().getId() == 1 || issueDto.getStatus().getId() == 2)|| issueDto.getStatus().getId() == 3) {
+            existIssueStatus.setStatus(openStatus);
+            Issue saved = issueRepo.save(existIssueStatus);
+            return modelMapper.map(saved, IssueDto.class);
+        }
+        throw new IllegalArgumentException("Invalid combination of issue statuses.");
+    }
     @Override
     public Issue findIssueById(long id) {
         return issueRepo.findById(id).orElseThrow(() -> new IssueNotFoundException("Error: Issue is not found."));
-
     }
-
-
     private IssueDto convertToIssueDto(Issue issue) {
         return modelMapper.map(issue, IssueDto.class);
     }

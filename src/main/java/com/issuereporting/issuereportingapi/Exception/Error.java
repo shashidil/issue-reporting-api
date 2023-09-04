@@ -15,6 +15,4 @@ public class Error {
     private Date timeStamp;
     private  String message;
     private String details;
-
-
 }

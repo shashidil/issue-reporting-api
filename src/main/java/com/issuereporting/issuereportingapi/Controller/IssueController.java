@@ -5,7 +5,6 @@ import com.issuereporting.issuereportingapi.Dto.SearchIssueDto;
 import com.issuereporting.issuereportingapi.Entity.Issue;
 import com.issuereporting.issuereportingapi.Service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +31,9 @@ public class IssueController {
     public ResponseEntity<?> updateIssue(@RequestBody IssueDto issueDto, @PathVariable long id) {
         Issue existIssue = issueService.findIssueById(id);
         if (null != existIssue) {
-            issueService.updateIssue(issueDto);
+            issueService.updateIssue(issueDto,id);
         }
-        return new ResponseEntity<>("Updated " + issueDto.getTitle(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Updated issue ", HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
@@ -55,7 +54,7 @@ public class IssueController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable long id) {
+    public ResponseEntity<?> deleteIssue(@PathVariable long id) {
         issueService.deleteIssue(id);
         return new ResponseEntity<>(
                 "Issue Deleted",

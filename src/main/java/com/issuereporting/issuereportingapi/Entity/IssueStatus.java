@@ -18,16 +18,11 @@ public class IssueStatus {
         this.id = id;
         this.name = name;
     }
-
     public long getId() {
         return id;
     }
-
     public IssueStatus() {
-
     }
-
-
     public void setId(long id) {
         this.id = id;
     }
